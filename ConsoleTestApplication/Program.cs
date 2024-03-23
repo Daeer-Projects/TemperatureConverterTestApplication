@@ -4,54 +4,52 @@ using Converter.Temperature.Extensions.To;
 
 namespace ConsoleTestApplication
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello and welcome to the Temperature Converter test application.");
-            Console.WriteLine("This version is the console application.");
-
             bool isQuit = false;
-
+            var userInterfaceManager = new UserInterfaceManager();
+            UserInterfaceManager.DisplayWelcome();
 
             while (!isQuit)
             {
-                DisplayUserInformation();
+                UserInterfaceManager.DisplayInformation();
                 var input = Console.ReadLine();
 
-                if (input != null && (input.Equals("q", StringComparison.OrdinalIgnoreCase) || input.Equals("quit", StringComparison.OrdinalIgnoreCase)))
+                if (input != null &&
+                    (input.Equals("q", StringComparison.OrdinalIgnoreCase) ||
+                     input.Equals("quit", StringComparison.OrdinalIgnoreCase)))
                 {
                     isQuit = true;
                 }
                 else
                 {
-                    var celsiusValue = input.FromCelsius().ToCelsius();
-                    var fahrenheitValue = input.FromCelsius().ToFahrenheit();
-                    var kelvinValue = input.FromCelsius().ToKelvin();
+                    var celsiusValue = input.FromCelsius()
+                        .ToCelsius();
+                    var fahrenheitValue = input.FromCelsius()
+                        .ToFahrenheit();
+                    var kelvinValue = input.FromCelsius()
+                        .ToKelvin();
                     string gasValue;
 
                     try
                     {
-                        gasValue = input.FromCelsius().ToGas();
+                        gasValue = input.FromCelsius()
+                            .ToGas();
                     }
                     catch (ArgumentOutOfRangeException exception)
                     {
                         gasValue = exception.Message;
                     }
 
-                    Console.WriteLine("\r\nThe results are as follows:");
-                    Console.WriteLine($"Celsius: {celsiusValue}\u00b0C");
-                    Console.WriteLine($"Fahrenheit: {fahrenheitValue}\u00b0F");
-                    Console.WriteLine($"Kelvin: {kelvinValue} kelvin");
-                    Console.WriteLine($"Gas mark: {gasValue}");
+                    UserInterfaceManager.DisplayResults(
+                        celsiusValue,
+                        fahrenheitValue,
+                        kelvinValue,
+                        gasValue);
                 }
             }
-        }
-
-        private static void DisplayUserInformation()
-        {
-            Console.WriteLine("\r\nPlease use 'q', 'Q' or 'quit' to exit.");
-            Console.WriteLine("\r\nPlease enter a value for converting:\r\n");
         }
     }
 }
