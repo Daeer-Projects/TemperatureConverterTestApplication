@@ -1,54 +1,57 @@
-﻿using System;
+﻿namespace ConsoleTestApplication;
+
+using System;
 using Converter.Temperature.Extensions.From;
 using Converter.Temperature.Extensions.To;
 
-namespace ConsoleTestApplication
+internal static class Program
 {
-    internal static class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
+        bool isQuit = false;
+        UserInterfaceManager userInterfaceManager = new UserInterfaceManager();
+        UserInterfaceManager.DisplayWelcome();
+
+        while (!isQuit)
         {
-            bool isQuit = false;
-            var userInterfaceManager = new UserInterfaceManager();
-            UserInterfaceManager.DisplayWelcome();
+            UserInterfaceManager.DisplayInformation();
+            string input = Console.ReadLine() ?? string.Empty;
 
-            while (!isQuit)
+            if (string.IsNullOrWhiteSpace(input) ||
+                (input == "q" ||
+                 input == "Q" ||
+                 input.Equals("quit", StringComparison.OrdinalIgnoreCase)))
             {
-                UserInterfaceManager.DisplayInformation();
-                var input = Console.ReadLine();
+                isQuit = true;
+            }
+            else
+            {
+                string celsiusValue = input.FromCelsius()
+                    .ToCelsius();
+                string fahrenheitValue = input.FromCelsius()
+                    .ToFahrenheit();
+                string kelvinValue = input.FromCelsius()
+                    .ToKelvin();
+                string rankinValue = input.FromCelsius()
+                    .ToRankine();
+                string gasValue;
 
-                if (input != null &&
-                    (input.Equals("q", StringComparison.OrdinalIgnoreCase) ||
-                     input.Equals("quit", StringComparison.OrdinalIgnoreCase)))
+                try
                 {
-                    isQuit = true;
+                    gasValue = input.FromCelsius()
+                        .ToGas();
                 }
-                else
+                catch (ArgumentOutOfRangeException exception)
                 {
-                    var celsiusValue = input.FromCelsius()
-                        .ToCelsius();
-                    var fahrenheitValue = input.FromCelsius()
-                        .ToFahrenheit();
-                    var kelvinValue = input.FromCelsius()
-                        .ToKelvin();
-                    string gasValue;
-
-                    try
-                    {
-                        gasValue = input.FromCelsius()
-                            .ToGas();
-                    }
-                    catch (ArgumentOutOfRangeException exception)
-                    {
-                        gasValue = exception.Message;
-                    }
-
-                    UserInterfaceManager.DisplayResults(
-                        celsiusValue,
-                        fahrenheitValue,
-                        kelvinValue,
-                        gasValue);
+                    gasValue = exception.Message;
                 }
+
+                UserInterfaceManager.DisplayResults(
+                    celsiusValue,
+                    fahrenheitValue,
+                    kelvinValue,
+                    rankinValue,
+                    gasValue);
             }
         }
     }
