@@ -2,14 +2,18 @@
 
 using System;
 using Converter.Temperature.Extensions.From;
-using Converter.Temperature.Extensions.To;
+using Converter.Temperature.Extensions.To.Celsius;
+using Converter.Temperature.Extensions.To.Fahrenheit;
+using Converter.Temperature.Extensions.To.Gas;
+using Converter.Temperature.Extensions.To.Kelvin;
+using Converter.Temperature.Extensions.To.Rankine;
+using Converter.Temperature.Extensions.To.Rømer;
 
 internal static class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         bool isQuit = false;
-        UserInterfaceManager userInterfaceManager = new UserInterfaceManager();
         UserInterfaceManager.DisplayWelcome();
 
         while (!isQuit)
@@ -34,6 +38,8 @@ internal static class Program
                     .ToKelvin();
                 string rankinValue = input.FromCelsius()
                     .ToRankine();
+                string rømerValue = input.FromCelsius()
+                    .ToRømer();
                 string gasValue;
 
                 try
@@ -51,6 +57,7 @@ internal static class Program
                     fahrenheitValue,
                     kelvinValue,
                     rankinValue,
+                    rømerValue,
                     gasValue);
             }
         }

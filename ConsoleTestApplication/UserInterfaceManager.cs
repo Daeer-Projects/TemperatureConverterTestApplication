@@ -2,7 +2,7 @@
 
 using System;
 
-internal sealed class UserInterfaceManager
+internal static class UserInterfaceManager
 {
     internal static void DisplayWelcome()
     {
@@ -21,6 +21,7 @@ internal sealed class UserInterfaceManager
         string fahrenheitValue,
         string kelvinValue,
         string rankinValue,
+        string rømerValue,
         string gasValue)
     {
         Console.WriteLine("\r\nThe results are as follows:");
@@ -28,6 +29,7 @@ internal sealed class UserInterfaceManager
         Console.WriteLine($"Fahrenheit: {fahrenheitValue}\u00b0F");
         Console.WriteLine($"Kelvin: {kelvinValue} kelvin");
         Console.WriteLine($"Rankine: {rankinValue}\u00b0R");
+        Console.WriteLine($"Rømer: {rømerValue}\u00b0Rø");
         Console.WriteLine($"Gas mark: {gasValue}");
     }
 }
